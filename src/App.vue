@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderComp @search="searchTitle"/>
-    <MainComp/>
+    <MainComp :films="movies"/>
   </div>
 </template>
 
