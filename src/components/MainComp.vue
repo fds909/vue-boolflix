@@ -1,18 +1,21 @@
 <template>
   <main>
-    <ul v-for="(elem, index) in movies" :key="index">
-        <li>{{ elem.title }}</li>
-        <li>{{ elem.originalTitle }}</li>
-        <li>{{ elem.language }}</li>
-        <li>{{ elem.vote }}</li>
-    </ul>
+    <FilmsListComp :films="films"/>
+    <SeriesListComp :series="series"/>
   </main>
 </template>
 
 <script>
+import FilmsListComp from './FilmsListComp.vue'
+import SeriesListComp from './SeriesListComp.vue'
+
 export default {
   name: 'MainComp',
-  props: ['movies'],
+  components: {
+      FilmsListComp,
+      SeriesListComp
+  },
+  props: ['films', 'series'],
   data() {
       return {
           
@@ -22,5 +25,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+    main {
+        padding: 30px;
+        background-color: rgb(69, 69, 69);
+        color: white;
+    }
 </style>

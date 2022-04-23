@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderComp @search="searchTitle"/>
-    <MainComp :films="movies"/>
+    <MainComp :films="films" :series="series"/>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     return {
       apiKey: '480ca1b608920c32ceb1d868578f7cdf',
       searchText: '',
-      movies: [],
+      films: [],
       series: []
     }
   },
@@ -29,7 +29,13 @@ export default {
       this.searchText = text;
       console.log(this.searchText);
 
+      // svuotamento dell'array dei risultati se è già pieno
+      if (this.films.length > 0) {
+        this.films = [];
+      }
+
       if (this.searchText != '') {
+        // MOVIE
         axios.get( `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.searchText}&language=it-IT`)
         .then( (res) => {
           console.log(res.data.results);
@@ -42,10 +48,27 @@ export default {
               'vote': element.vote_average
             }
 
-            this.movies.push(movie);
+            this.films.push(movie);
           });
 
-          console.log(this.movies);
+          console.log(this.films);
+        });
+
+        // TV SERIES
+        axios.get( `https://api.themoviedb.org/3/search/tv?api_key=${this.apiKey}&query=${this.searchText}&language=it-IT`)
+        .then( (res) => {
+          console.log(res.data.results);
+
+          res.data.results.forEach(element => {
+            let serie = {
+              'title': element.name,
+              'originalTitle': element.original_name,
+              'language': element.original_language,
+              'vote': element.vote_average
+            }
+
+            this.series.push(serie);
+          });
         });
       }
       

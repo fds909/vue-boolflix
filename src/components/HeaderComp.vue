@@ -35,6 +35,7 @@ export default {
 
     .logo {
         font-size: 24px;
+        font-weight: bold;
         color: red;
     }
 
