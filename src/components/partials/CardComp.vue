@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <img v-if="poster == null" src="../../assets/img/not-found.jpg" alt="Cover Not Found">
+        <img v-if="poster == null" src="../../assets/img/not-found.png" alt="Cover Not Found">
         <img v-else :src="`https://image.tmdb.org/t/p/w342${poster}`" alt="Poster">
         <div class="card-info">
             <h3>{{ title }}</h3>
@@ -20,7 +20,7 @@
                 <div v-for="(star, index) in Math.ceil(vote / 2)" :key="index"><img src="../../assets/icons/star.svg" class="star-icon"></div>
                 <div v-for="(star, index) in 5 - Math.ceil(vote / 2)" :key="index"><img src="../../assets/icons/star-empty.svg" class="star-icon"></div>
             </div>
-            <div class="overview"><strong>Overview:</strong>
+            <div v-if="overview.length > 0" class="overview"><strong>Overview:</strong>
                 <p v-if="overview.length > 200">{{overview.substring(0, 200) + '...'}}</p>
                 <p v-else>{{ overview }}</p>
             </div>
