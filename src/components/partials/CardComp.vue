@@ -1,10 +1,12 @@
 <template>
     <div class="card">
-        <img :src="`https://image.tmdb.org/t/p/w342${poster}`" alt="Poster">
+        <img v-if="poster == null" src="../../assets/img/not-found.jpg" alt="Cover Not Found">
+        <img v-else :src="`https://image.tmdb.org/t/p/w342${poster}`" alt="Poster">
         <div class="card-info">
             <h3>{{ title }}</h3>
-            <div><strong>Original title: </strong>{{ originalTitle }}</div>
-            <div>
+            <!-- Il titolo originale viene nascosto se è uguale al titolo  -->
+            <div v-if="originalTitle != title"><strong>Original title: </strong>{{ originalTitle }}</div>
+            <div class="lang">
                 <strong>Language: </strong>
                 <span v-if="flags.includes(language)">
                     <img class="flag-icon" :src="require(`../../assets/img/${language}.png`)" alt="Language Flag">
@@ -17,6 +19,10 @@
             <div class="vote">
                 <div v-for="(star, index) in Math.ceil(vote / 2)" :key="index"><img src="../../assets/icons/star.svg" class="star-icon"></div>
                 <div v-for="(star, index) in 5 - Math.ceil(vote / 2)" :key="index"><img src="../../assets/icons/star-empty.svg" class="star-icon"></div>
+            </div>
+            <div class="overview"><strong>Overview:</strong>
+                <p v-if="overview.length > 200">{{overview.substring(0, 200) + '...'}}</p>
+                <p v-else>{{ overview }}</p>
             </div>
         </div>
     </div>
@@ -35,7 +41,8 @@ export default {
       originalTitle: String,
       language: String,
       vote: Number,
-      poster: String
+      poster: String,
+      overview: String
   },
   data() {
       return {
@@ -61,6 +68,14 @@ export default {
         position: relative;
     }
 
+    h3 {
+        margin-bottom: 15px;
+    }
+
+    .lang {
+        margin: 10px 0;
+    }
+
     .flag-icon {
         width: 30px;
     }
@@ -74,11 +89,13 @@ export default {
         width: 100%;
         opacity: 0;
         position: absolute;
+        padding: 10px;
+        text-align: center;
         z-index: 10;
     }
 
     .card-info:hover {
-        opacity: 1;
+        opacity: 0.9;
         background-color: black;
         transition: 0.5s;
     }
@@ -93,6 +110,11 @@ export default {
 
     .star-icon {
         width: 20px;
+    }
+
+    .overview {
+        font-size: 14px;
+        margin-top: 10px;
     }
 
 </style>

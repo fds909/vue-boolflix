@@ -29,9 +29,13 @@ export default {
       this.searchText = text;
       console.log(this.searchText);
 
-      // svuotamento dell'array dei risultati se è già pieno
+      // svuotamento degli array dei risultati se è già pieno
       if (this.films.length > 0) {
         this.films = [];
+      }
+
+      if (this.series.length > 0) {
+        this.series = [];
       }
 
       if (this.searchText != '') {
@@ -45,7 +49,9 @@ export default {
               'title': element.title,
               'originalTitle': element.original_title,
               'language': element.original_language,
-              'vote': element.vote_average
+              'vote': element.vote_average,
+              'poster': element.poster_path,
+              'overview': element.overview
             }
 
             this.films.push(movie);
@@ -57,18 +63,22 @@ export default {
         // TV SERIES
         axios.get( `https://api.themoviedb.org/3/search/tv?api_key=${this.apiKey}&query=${this.searchText}&language=it-IT`)
         .then( (res) => {
-          console.log(res.data.results);
+          console.log('tv series: ', res.data.results);
 
           res.data.results.forEach(element => {
             let serie = {
               'title': element.name,
               'originalTitle': element.original_name,
               'language': element.original_language,
-              'vote': element.vote_average
+              'vote': element.vote_average,
+              'poster': element.poster_path,
+              'overview': element.overview
             }
 
             this.series.push(serie);
           });
+
+          console.log(this.series);
         });
       }
       
@@ -83,5 +93,10 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background-color: rgb(69, 69, 69);
   }
 </style>

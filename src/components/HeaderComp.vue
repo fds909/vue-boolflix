@@ -2,11 +2,13 @@
   <header>
       <div class="logo">BOOLFLIX</div>
       <div class="search-area">
-          <input type="text" placeholder="Cerca film"
+          <input class="text-input" type="text" placeholder="Cerca film"
                 v-model="searchText"
                 @keyup.enter="$emit('search', searchText)"
           />
-          <button type="submit" @click="$emit('search', searchText)">Cerca</button>
+          <button class="search-btn" type="submit" @click="$emit('search', searchText)">
+              <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
       </div>
   </header>
 </template>
@@ -41,5 +43,26 @@ export default {
 
     .search-area {
         height: 60px;
+        line-height: 60px;
+    }
+
+    .text-input {
+        padding: 0 10px;
+    }
+
+    .text-input, .search-btn {
+        height: 30px;
+    }
+
+    .text-input::placeholder {
+        padding: 0 10px;
+    }
+
+    .search-btn {
+        color: white;
+        background-color: red;
+        width: 50px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h2>Series</h2>
+        <h2 v-if="series.length>0">Series</h2>
 
-        <div class="series-list">
+        <div id="series-list">
             <CardComp
                 v-for="(element, index) in series"
                 :key="index"
@@ -10,6 +10,8 @@
                 :originalTitle="element.originalTitle"
                 :language="element.language"
                 :vote="element.vote"
+                :poster="element.poster"
+                :overview= element.overview
             />
         </div>
     </div>
@@ -28,9 +30,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .series-list {
+    #series-list {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
+    }
+
+    h2 {
+        margin: 30px 0;
     }
 </style>
